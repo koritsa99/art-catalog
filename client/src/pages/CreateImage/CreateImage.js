@@ -1,20 +1,39 @@
 import { useMutation } from 'react-query';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './CreateImage.module.css';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import FormField from '../../components/FormField';
-import * as imagesApi from '../../services/imagesApi';
 import FileUpload from '../../components/FileUpload';
+import Autocomplete from '../../components/Autocomplete';
+import * as imagesApi from '../../services/imagesApi';
+import * as authorsApi from '../../services/authorsApi';
+import { urls } from '../../config/routes';
 
 function CreateImage() {
-  const mutation = useMutation(imagesApi.createImage);
+  const [author, setAuthor] = useState('');
+  const [tags, setTags] = useState('');
+  const [authorsList, setAuthorsList] = useState([]);
+
+  const navigate = useNavigate();
+
+  const imagesMutation = useMutation(imagesApi.createImage, {
+    onSuccess: (newImage) => {
+      navigate(`${urls.images}/${newImage.id}`);
+    },
+  });
+
+  useEffect(() => {
+    authorsApi.fetchAuthors(author).then((res) => setAuthorsList(res));
+  }, [author]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    mutation.mutate(formData);
+    imagesMutation.mutate(formData);
   }
 
   return (
@@ -32,22 +51,36 @@ function CreateImage() {
             />
           </FormField>
           <FormField label="Author">
-            <Input
-              type="text"
-              autoComplete="off"
+            <Autocomplete
               name="author"
               placeholder="Author"
               id="createImageAuthor"
+              options={
+                authorsList && authorsList.length > 0
+                  ? authorsList.map((author) => author.nickname)
+                  : []
+              }
+              value={author}
+              onChange={(e) => setAuthor(e.currentTarget.value)}
+              onSelect={(option) => setAuthor(option)}
               required
             />
           </FormField>
           <FormField label="Tags">
-            <Input
-              type="text"
-              autoComplete="off"
+            <Autocomplete
               name="tags"
               placeholder="Tags eg. tag1, tag2"
               id="createImageTags"
+              options={[
+                'anal',
+                'anal_beads',
+                'fisting',
+                'cum',
+                'anal_insertion',
+              ].filter((tag) => tag.toLowerCase().includes(tags.toLowerCase()))}
+              value={tags}
+              onChange={(e) => setTags(e.currentTarget.value)}
+              onSelect={(option) => setTags(option)}
             />
           </FormField>
           <FormField label="Original URL">
@@ -64,7 +97,8 @@ function CreateImage() {
         <Button
           type="submit"
           className={styles.submitBtn}
-          isLoading={mutation.isLoading}
+          isLoading={imagesMutation.isLoading}
+          variant="secondary"
         >
           Create
         </Button>

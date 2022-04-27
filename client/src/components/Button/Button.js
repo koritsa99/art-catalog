@@ -9,9 +9,10 @@ function Button({
   component: Component = 'button',
   className,
   isLoading = false,
+  variant = 'default',
   ...otherProps
 }) {
-  const baseClassName = styles.button;
+  const baseClassName = styles[variant];
   const finalProps = {
     className: className ? `${baseClassName} ${className}` : baseClassName,
     type,
