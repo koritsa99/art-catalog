@@ -5,7 +5,7 @@ const prisma = require('../config/prisma');
 
 const router = express.Router();
 
-router.post('/', imageUpload.single('image'), async (req, res, next) => {
+router.post('/', imageUpload.array('image'), async (req, res, next) => {
   try {
     const { author, tags, originalUrl } = req.body;
     const tagsArray = tags.split(', ');
@@ -23,7 +23,9 @@ router.post('/', imageUpload.single('image'), async (req, res, next) => {
           },
         },
         originalUrl: originalUrl || null,
-        fileUrl: `${process.env.BASE_URL}/images/${req.file.filename}`,
+        imageUrls: req.files.map(
+          (file) => `${process.env.BASE_URL}/images/${file.filename}`
+        ),
         tags: {
           connectOrCreate: tagsArray.map((tag) => ({
             where: {

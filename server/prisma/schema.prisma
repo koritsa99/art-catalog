@@ -14,7 +14,7 @@ model Image {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  fileUrl     String
+  imageUrls   String[]
   originalUrl String?
   author      Author   @relation(fields: [authorId], references: [id])
   authorId    Int
