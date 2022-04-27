@@ -1,7 +1,7 @@
 .card {
   display: block;
   text-decoration: none;
-  border-radius: 12px;
+  border-radius: var(--border-radius-normal);
   position: relative;
 }
 

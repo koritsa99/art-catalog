@@ -1,9 +1,28 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
 html {
   --image-size: 230px;
   --color-background: #141414;
   --color-button-background-secondary-default: #404040;
   --color-button-background-secondary-hover: #4c4c4e;
   --color-button-background-secondary-active: #404040;
+  --color-button-background-secondary-focus: #404040;
+
+  --color-input-background-secondary-default: #404040;
+  --color-input-background-secondary-hover: #4c4c4e;
+  --color-input-background-secondary-active: #404040;
+  --color-input-background-secondary-focus: #252525;
+
+  --color-input-border-secondary-focus: #404040;
+
+  --animation-duration-normal: 75ms;
+
+  --border-radius-normal: 4px;
 }
 
 body {
@@ -14,9 +33,32 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-background);
+  color: #fff;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+.visually-hidden {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  margin: -1px;
 }

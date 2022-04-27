@@ -1,11 +1,40 @@
-import styles from './Button.module.css';
+import { createElement } from 'react';
 
-function Button({ children, type = 'button' }) {
-  return (
-    <button className={styles.button} type={type}>
+import styles from './Button.module.css';
+import Spinner from '../Spinner';
+
+function Button({
+  children,
+  type = 'button',
+  component: Component = 'button',
+  className,
+  isLoading = false,
+  ...otherProps
+}) {
+  const baseClassName = styles.button;
+  const finalProps = {
+    className: className ? `${baseClassName} ${className}` : baseClassName,
+    type,
+    disabled: isLoading,
+    ...otherProps,
+  };
+
+  const finalChildren = (
+    <>
       {children}
-    </button>
+      {isLoading && (
+        <div className={styles.loader}>
+          <Spinner size={9} />
+        </div>
+      )}
+    </>
   );
+
+  if (typeof Component === 'string') {
+    return createElement(Component, finalProps, finalChildren);
+  } else {
+    return <Component {...finalProps}>{finalChildren}</Component>;
+  }
 }
 
 export default Button;

@@ -1,0 +1,10 @@
+.inputsBox {
+  max-width: 600px;
+  margin: 0 auto 12px;
+}
+
+.submitBtn {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}

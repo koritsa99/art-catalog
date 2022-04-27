@@ -1,19 +1,22 @@
-import { BsPlus } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
 import styles from './Navbar.module.css';
 import Container from '../Container';
 import Button from '../Button';
-import IconButton from '../IconButton';
+import { urls } from '../../config/routes';
 
 function Navbar() {
   return (
     <header className={styles.header}>
       <Container>
         <div className={styles.content}>
-          <p className={styles.logo}>Art Catalog</p>
+          <Link to={urls.home} className={styles.logo}>
+            Art Catalog
+          </Link>
           <div className={styles.controls}>
-            <Button type="button">Add</Button>
-            <IconButton icon={BsPlus} />
+            <Button type="button" component={Link} to={urls.createImage}>
+              Create
+            </Button>
           </div>
         </div>
       </Container>
