@@ -95,7 +95,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:imageId', async (req, res) => {
+router.get('/:imageId', async (req, res, next) => {
   try {
     const image = await prisma.image.findUnique({
       where: {
