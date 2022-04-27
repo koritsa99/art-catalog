@@ -27,6 +27,7 @@ function CreateImage() {
               name="image"
               placeholder="Upload image"
               id="createImageImage"
+              multiple
               required
             />
           </FormField>

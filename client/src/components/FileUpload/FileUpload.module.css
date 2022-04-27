@@ -1,9 +1,12 @@
 .container {
   width: 100%;
+}
+
+.inputBox {
   position: relative;
-  cursor: pointer;
   overflow: hidden;
   border-radius: var(--border-radius-normal);
+  cursor: pointer;
 }
 
 .input {
@@ -12,8 +15,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  height: 100%;
   opacity: 0;
   cursor: pointer;
   z-index: 99;
@@ -22,14 +23,25 @@
 .label {
   display: block;
   width: 100%;
-  padding-bottom: 100%;
+  height: 200px;
   background-color: var(--color-input-background-secondary-default);
-  background-size: cover;
-  background-position: center;
+  transition: background-color var(--animation-duration-normal) linear;
 }
 
 .input:hover + .label {
   background-color: var(--color-input-background-secondary-hover);
+}
+
+.label::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  border: 2px dashed var(--color-input-border-secondary-normal);
+  border-radius: var(--border-radius-normal);
+  transition: border-color var(--animation-duration-normal) linear;
 }
 
 .labelDragOver {
@@ -37,41 +49,46 @@
   background-color: var(--color-input-background-secondary-hover);
 }
 
-.imagePreview {
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  cursor: pointer;
+.labelDragOver::before {
+  border-color: #fff;
 }
 
-.imagePreview::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  transition: background-color var(--animation-duration-normal) linear;
-}
-
-.container:hover .imagePreview::before {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.content {
+.labelHelp {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  cursor: pointer;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.labelText {
+  font-weight: 700;
+}
+
+.previews {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
+  margin-top: 8px;
+}
+
+.previewsItem {
+  aspect-ratio: 1;
+}
+
+.previewsImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--border-radius-normal);
+}
+
+@media (max-width: 790px) {
+  .previews {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

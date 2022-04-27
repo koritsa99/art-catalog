@@ -19,6 +19,7 @@ html {
   --color-input-background-secondary-focus: #252525;
 
   --color-input-border-secondary-focus: #404040;
+  --color-input-border-secondary-normal: #c1c1c1;
 
   --animation-duration-normal: 75ms;
 

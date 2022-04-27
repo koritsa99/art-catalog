@@ -30,6 +30,7 @@ function FileUpload({ accept, multiple, id, ...otherProps }) {
   function handleDrop(e) {
     e.preventDefault();
     setFiles(e.dataTransfer.files);
+    setIsDragging(false);
   }
 
   function handleChange(e) {
@@ -38,39 +39,46 @@ function FileUpload({ accept, multiple, id, ...otherProps }) {
 
   return (
     <div className={styles.container}>
-      <input
-        ref={inputRef}
-        type="file"
-        accept={accept}
-        multiple={multiple}
-        className={styles.input}
-        id={id}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        onChange={handleChange}
-        {...otherProps}
-      />
-      <label
-        className={isDragging ? styles.labelDragOver : styles.label}
-        htmlFor={id}
-      >
-        {files.length > 0 && (
-          <div
-            className={styles.imagePreview}
-            style={{
-              backgroundImage:
-                files.length > 0
-                  ? `url(${URL.createObjectURL(files[0])})`
-                  : 'none',
-            }}
-          />
-        )}
-        <div className={styles.content}>
-          <BsUpload size={35} />
-          {files.length > 0 && files[0].name}
+      <div className={styles.inputBox}>
+        <input
+          ref={inputRef}
+          type="file"
+          accept={accept}
+          multiple={multiple}
+          className={styles.input}
+          id={id}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          onChange={handleChange}
+          {...otherProps}
+        />
+        <label
+          className={isDragging ? styles.labelDragOver : styles.label}
+          htmlFor={id}
+        >
+          <div className={styles.labelHelp}>
+            <BsUpload size={35} className={styles.labelIcon} />
+            <p className={styles.labelText}>
+              Drop images here or click and browse
+            </p>
+          </div>
+        </label>
+      </div>
+
+      {files.length > 0 && (
+        <div className={styles.previews}>
+          {Array.from(files).map((file, i) => (
+            <div key={i} className={styles.previewsItem}>
+              <img
+                src={URL.createObjectURL(file)}
+                alt={file.name}
+                className={styles.previewsImg}
+              />
+            </div>
+          ))}
         </div>
-      </label>
+      )}
     </div>
   );
 }
