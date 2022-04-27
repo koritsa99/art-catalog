@@ -1,0 +1,30 @@
+.container {
+  --max-width: calc(var(--image-size) * 5);
+  max-width: calc(var(--max-width) - 30px);
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+@media (max-width: 1500px) {
+  .container {
+    --max-width: calc(var(--image-size) * 4);
+  }
+}
+
+@media (max-width: 1150px) {
+  .container {
+    max-width: calc(var(--image-size) * 3);
+  }
+}
+
+@media (max-width: 790px) {
+  .container {
+    max-width: calc(var(--image-size) * 2);
+  }
+}
+
+@media (max-width: 540px) {
+  .container {
+    max-width: 100%;
+  }
+}

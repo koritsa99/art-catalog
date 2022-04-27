@@ -1,0 +1,22 @@
+.header {
+  background-color: #1b1b1b;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.controls {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}
