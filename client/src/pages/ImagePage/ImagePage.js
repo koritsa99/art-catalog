@@ -18,7 +18,22 @@ function ImagePage() {
       {isLoading && <p>Loading...</p>}
       {data && (
         <>
-          <img src={data.fileUrl} alt={data.fileUrl} className={styles.image} />
+          <div>
+            {data.imageUrls.map((imageUrl) => (
+              <a
+                href={imageUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.imageLink}
+              >
+                <img
+                  src={imageUrl}
+                  alt={data.author.nickname}
+                  className={styles.image}
+                />
+              </a>
+            ))}
+          </div>
           <h3>{data.author.nickname}</h3>
           <div>
             {data.tags.map((tag) => (

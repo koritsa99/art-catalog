@@ -1,6 +1,15 @@
+.imageLink {
+  display: block;
+}
+
+.imageLink:not(:last-child) {
+  margin-bottom: 12px;
+}
+
 .image {
   display: block;
   width: 100%;
+  border-radius: var(--border-radius-normal);
 }
 
 .author {
