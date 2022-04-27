@@ -95,4 +95,29 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/:imageId', async (req, res) => {
+  try {
+    const image = await prisma.image.findUnique({
+      where: {
+        id: Number(req.params.imageId),
+      },
+      include: {
+        author: true,
+        tags: true,
+      },
+    });
+
+    if (!image) {
+      res.status(404).json({
+        message: `Image with id ${req.params.imageId} not found`,
+      });
+      return;
+    }
+
+    res.json(image);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
