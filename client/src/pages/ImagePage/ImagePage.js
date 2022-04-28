@@ -21,6 +21,7 @@ function ImagePage() {
           <div>
             {data.imageUrls.map((imageUrl) => (
               <a
+                key={imageUrl}
                 href={imageUrl}
                 target="_blank"
                 rel="noreferrer"
