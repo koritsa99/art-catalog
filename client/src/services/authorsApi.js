@@ -1,11 +1,9 @@
 import axios from '../config/axiosDefault';
 
-export function fetchAuthors(searchQuery) {
+export function fetchAuthors(q = '', page = 1) {
   return axios({
     method: 'GET',
     url: '/authors',
-    params: {
-      q: searchQuery,
-    },
+    params: { q, page },
   }).then(({ data }) => data);
 }

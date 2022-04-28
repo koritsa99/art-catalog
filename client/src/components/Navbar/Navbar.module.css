@@ -7,6 +7,8 @@
 .content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   height: 64px;
 }
 
@@ -15,8 +17,12 @@
   font-weight: 700;
 }
 
+.searchbarBox {
+  max-width: 450px;
+  width: 100%;
+}
+
 .controls {
-  margin-left: auto;
   display: flex;
   gap: 4px;
 }

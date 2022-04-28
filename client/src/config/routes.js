@@ -2,6 +2,7 @@ import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
 import CreateImage from '../pages/CreateImage';
 import ImagePage from '../pages/ImagePage';
+import Search from '../pages/Search';
 
 export const urls = {
   home: '/',
@@ -33,5 +34,10 @@ export const routes = [
     key: 'imagePage',
     path: `${urls.images}/:imageId`,
     element: <ImagePage />,
+  },
+  {
+    key: 'search',
+    path: urls.search,
+    element: <Search />,
   },
 ];

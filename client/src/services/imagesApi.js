@@ -1,9 +1,10 @@
 import axios from '../config/axiosDefault';
 
-export function searchImages() {
+export function searchImages(q = '', page = 1) {
   return axios({
     method: 'GET',
     url: '/images',
+    params: { author: q, page },
   }).then(({ data }) => data);
 }
 

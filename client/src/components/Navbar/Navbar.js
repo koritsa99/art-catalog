@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 
 import styles from './Navbar.module.css';
+
+import { urls } from '../../config/routes';
+
 import Container from '../Container';
 import Button from '../Button';
-import { urls } from '../../config/routes';
+import Searchbar from '../Searchbar';
 
 function Navbar() {
   return (
@@ -13,6 +16,9 @@ function Navbar() {
           <Link to={urls.home} className={styles.logo}>
             Art Catalog
           </Link>
+          <div className={styles.searchbarBox}>
+            <Searchbar />
+          </div>
           <div className={styles.controls}>
             <Button type="button" component={Link} to={urls.createImage}>
               Create
