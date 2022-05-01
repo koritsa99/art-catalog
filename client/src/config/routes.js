@@ -1,8 +1,9 @@
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
+import Search from '../pages/Search';
 import CreateImage from '../pages/CreateImage';
 import ImagePage from '../pages/ImagePage';
-import Search from '../pages/Search';
+import AuthorPage from '../pages/AuthorPage';
 
 export const urls = {
   home: '/',
@@ -26,6 +27,11 @@ export const routes = [
     element: <NotFound />,
   },
   {
+    key: 'search',
+    path: urls.search,
+    element: <Search />,
+  },
+  {
     key: 'createImage',
     path: urls.createImage,
     element: <CreateImage />,
@@ -36,8 +42,8 @@ export const routes = [
     element: <ImagePage />,
   },
   {
-    key: 'search',
-    path: urls.search,
-    element: <Search />,
+    key: 'authorPage',
+    path: `${urls.authors}/:authorId`,
+    element: <AuthorPage />,
   },
 ];

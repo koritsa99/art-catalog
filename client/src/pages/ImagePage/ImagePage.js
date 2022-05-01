@@ -1,8 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import styles from './ImagePage.module.css';
 import * as imagesApi from '../../services/imagesApi';
+import { urls } from '../../config/routes';
 import Container from '../../components/Container';
 
 function ImagePage() {
@@ -35,7 +36,9 @@ function ImagePage() {
               </a>
             ))}
           </div>
-          <h3>{data.author.nickname}</h3>
+          <Link to={`${urls.authors}/${data.author.id}`}>
+            <h3>{data.author.nickname}</h3>
+          </Link>
           <div>
             {data.tags.map((tag) => (
               <span key={tag.id}>{tag.title}</span>

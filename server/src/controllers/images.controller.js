@@ -82,27 +82,6 @@ exports.search = async (req, res, next) => {
         },
       ],
     };
-
-    // const filter = {
-    //   tags: {
-    //     some: {
-    //       title: {
-    //         contains: q,
-    //         mode: 'insensitive',
-    //       },
-    //     },
-    //   },
-    // };
-
-    // const filter = {
-    //   author: {
-    //     nickname: {
-    //       contains: q,
-    //       mode: 'insensitive',
-    //     },
-    //   },
-    // };
-
     const images = await prisma.image.findMany({
       include: {
         tags: true,
