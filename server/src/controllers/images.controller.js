@@ -56,49 +56,54 @@ exports.create = async (req, res, next) => {
  */
 exports.search = async (req, res, next) => {
   try {
-    const {
-      author = '',
-      page = 1,
-      perPage = 12,
-      tags = '',
-      orderBy = 'createdAt',
-      orderMethod = 'desc',
-    } = req.query;
+    const { q = '', orderBy = 'createdAt', orderMethod = 'desc' } = req.query;
+    const page = Number(req.query.page) || 1;
+    const perPage = Number(req.query.perPage) || 1;
 
-    const tagsArr = tags.length > 1 ? tags.split(', ') : [];
+    const filter = {
+      OR: {
+        author: {
+          nickname: {
+            contains: q,
+            mode: 'insensitive',
+          },
+        },
+        tags: {
+          some: {
+            title: {
+              contains: q,
+              mode: 'insensitive',
+            },
+          },
+        },
+      },
+    };
 
     const images = await prisma.image.findMany({
       include: {
         tags: true,
         author: true,
       },
-      where: {
-        author: {
-          nickname: {
-            contains: author,
-            mode: 'insensitive',
-          },
-        },
-        tags:
-          tagsArr.length > 0
-            ? {
-                some: {
-                  title: {
-                    in: tagsArr,
-                    mode: 'insensitive',
-                  },
-                },
-              }
-            : undefined,
-      },
-      take: Number(perPage),
-      skip: (Number(page) - 1) * Number(perPage),
+      where: filter,
+      take: perPage,
+      skip: (page - 1) * perPage,
       orderBy: {
         [orderBy]: orderMethod,
       },
     });
+    const count = await prisma.image.count({
+      where: filter,
+      take: perPage,
+      skip: (page - 1) * perPage,
+    });
 
-    res.json(images);
+    res.json({
+      items: images,
+      count,
+      page,
+      perPage,
+      pagesCount: Math.ceil(count / perPage),
+    });
   } catch (error) {
     next(error);
   }

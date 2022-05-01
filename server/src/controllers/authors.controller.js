@@ -7,18 +7,37 @@ const prisma = require('../config/prisma');
  */
 exports.search = async (req, res, next) => {
   try {
-    const { q = '' } = req.query;
+    const { q = '', orderBy = 'createdAt', orderMethod = 'desc' } = req.query;
+    const page = Number(req.query.page) || 1;
+    const perPage = Number(req.query.perPage) || 1;
 
+    const filter = {
+      nickname: {
+        contains: q,
+        mode: 'insensitive',
+      },
+    };
     const authors = await prisma.author.findMany({
-      where: {
-        nickname: {
-          contains: q,
-          mode: 'insensitive',
-        },
+      where: filter,
+      take: perPage,
+      skip: (page - 1) * perPage,
+      orderBy: {
+        [orderBy]: orderMethod,
       },
     });
+    const count = await prisma.image.count({
+      where: filter,
+      take: perPage,
+      skip: (page - 1) * perPage,
+    });
 
-    res.json(authors);
+    res.json({
+      items: authors,
+      count,
+      page,
+      perPage,
+      pagesCount: Math.ceil(count / perPage),
+    });
   } catch (error) {
     next(error);
   }
