@@ -1,29 +1,42 @@
-import { useLocation } from 'react-router-dom';
-import qs from 'query-string';
-import { useQuery } from 'react-query';
 import { useState } from 'react';
 
-import * as imagesApi from '../../services/imagesApi';
-import * as authorsApi from '../../services/authorsApi';
-import ImagesList from '../../components/ImagesList';
+import ImagesResults from './ImagesResults';
 
 function Search() {
-  const location = useLocation();
-  const [page, setPage] = useState(1);
+  const [searchType, setSearchType] = useState('image');
 
-  const { q } = qs.parse(location.search);
-  const {
-    data: images,
-    isLoading,
-    error,
-  } = useQuery(
-    ['searchImages', q, page],
-    () => imagesApi.searchImages(q, page),
-    { keepPreviousData: true }
-  );
+  function handleChangeSearchType(e) {
+    setSearchType(e.target.value);
+  }
 
   return (
-    <div>{images && images.length > 0 && <ImagesList images={images} />}</div>
+    <div>
+      <div>
+        <div>
+          <label htmlFor="searchTypeImage">Image</label>
+          <input
+            type="radio"
+            id="searchTypeImage"
+            name="searchType"
+            value="image"
+            checked={searchType === 'image'}
+            onChange={handleChangeSearchType}
+          />
+        </div>
+        <div>
+          <label htmlFor="searchTypeAuthor">Author</label>
+          <input
+            type="radio"
+            id="searchTypeAuthor"
+            name="searchType"
+            value="author"
+            checked={searchType === 'author'}
+            onChange={handleChangeSearchType}
+          />
+        </div>
+      </div>
+      {searchType === 'image' && <ImagesResults />}
+    </div>
   );
 }
 

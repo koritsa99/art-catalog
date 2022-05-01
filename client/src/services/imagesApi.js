@@ -4,7 +4,7 @@ export function searchImages(q = '', page = 1) {
   return axios({
     method: 'GET',
     url: '/images',
-    params: { author: q, page },
+    params: { q, page },
   }).then(({ data }) => data);
 }
 

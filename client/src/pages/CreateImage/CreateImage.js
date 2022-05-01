@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,6 @@ import { urls } from '../../config/routes';
 function CreateImage() {
   const [author, setAuthor] = useState('');
   const [tags, setTags] = useState('');
-  const [authorsList, setAuthorsList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -24,10 +23,11 @@ function CreateImage() {
       navigate(`${urls.images}/${newImage.id}`);
     },
   });
-
-  useEffect(() => {
-    authorsApi.fetchAuthors(author).then((res) => setAuthorsList(res));
-  }, [author]);
+  const {
+    data: authors,
+    isLoading,
+    error,
+  } = useQuery(['authors', author], () => authorsApi.fetchAuthors(author));
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -56,8 +56,8 @@ function CreateImage() {
               placeholder="Author"
               id="createImageAuthor"
               options={
-                authorsList && authorsList.length > 0
-                  ? authorsList.map((author) => author.nickname)
+                authors && authors.items.length > 0
+                  ? authors.items.map((author) => author.nickname)
                   : []
               }
               value={author}

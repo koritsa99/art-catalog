@@ -8,7 +8,11 @@ function Home() {
     imagesApi.searchImages()
   );
 
-  return <div>{data && data.length > 0 && <ImagesList images={data} />}</div>;
+  return (
+    <div>
+      {data && data.items.length > 0 && <ImagesList images={data.items} />}
+    </div>
+  );
 }
 
 export default Home;
