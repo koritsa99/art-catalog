@@ -25,7 +25,7 @@ exports.search = async (req, res, next) => {
         [orderBy]: orderMethod,
       },
     });
-    const count = await prisma.image.count({
+    const count = await prisma.author.count({
       where: filter,
       take: perPage,
       skip: (page - 1) * perPage,
