@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const apiRouter = require('./routes/api');
 const { IMAGES_PATH } = require('./config/constants');
+require('./config/passport');
 
 const app = express();
 
