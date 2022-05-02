@@ -51,7 +51,7 @@ model Author {
   id        Int          @id @default(autoincrement())
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
-  name      String
+  name      String       @unique
   urls      WebsiteUrl[]
   images    Image[]
   user      User?

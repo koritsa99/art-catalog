@@ -23,7 +23,7 @@ exports.create = async (req, res, next) => {
           },
         },
         originalUrl: originalUrl || null,
-        imageUrls: req.files.map(
+        imagesUrls: req.files.map(
           (file) => `${process.env.BASE_URL}/images/${file.filename}`
         ),
         tags: {
