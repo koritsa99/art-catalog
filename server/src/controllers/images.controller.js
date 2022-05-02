@@ -15,10 +15,10 @@ exports.create = async (req, res, next) => {
         author: {
           connectOrCreate: {
             create: {
-              nickname: author,
+              name: author,
             },
             where: {
-              nickname: author,
+              name: author,
             },
           },
         },
@@ -64,7 +64,7 @@ exports.search = async (req, res, next) => {
       OR: [
         {
           author: {
-            nickname: {
+            name: {
               contains: q,
               mode: 'insensitive',
             },

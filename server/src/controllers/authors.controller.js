@@ -12,7 +12,7 @@ exports.search = async (req, res, next) => {
     const perPage = Number(req.query.perPage) || 12;
 
     const filter = {
-      nickname: {
+      name: {
         contains: q,
         mode: 'insensitive',
       },
