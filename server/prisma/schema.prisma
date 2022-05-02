@@ -14,11 +14,13 @@ model Image {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  imageUrls   String[]
+  imagesUrls  String[]
   originalUrl String?
+  tags        Tag[]
+  uploadedBy  User     @relation(fields: [uploaderId], references: [id])
+  uploaderId  Int
   author      Author   @relation(fields: [authorId], references: [id])
   authorId    Int
-  tags        Tag[]
 }
 
 model Tag {
@@ -29,13 +31,27 @@ model Tag {
   images    Image[]
 }
 
+model User {
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  username          String   @unique
+  password          String
+  verificationToken String?
+  authToken         String?
+  images            Image[]
+  author            Author?  @relation(fields: [authorId], references: [id])
+  authorId          Int?     @unique
+}
+
 model Author {
   id        Int          @id @default(autoincrement())
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
-  nickname  String       @unique
+  name      String
   urls      WebsiteUrl[]
   images    Image[]
+  user      User?
 }
 
 model WebsiteUrl {
@@ -44,6 +60,6 @@ model WebsiteUrl {
   updatedAt DateTime @updatedAt
   title     String
   url       String
-  authorId  Int
   author    Author   @relation(fields: [authorId], references: [id])
+  authorId  Int
 }
