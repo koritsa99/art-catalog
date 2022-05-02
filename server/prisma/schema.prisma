@@ -21,6 +21,7 @@ model Image {
   uploaderId  Int
   author      Author   @relation(fields: [authorId], references: [id])
   authorId    Int
+  likedBy     User[]   @relation(name: "likes")
 }
 
 model Tag {
@@ -35,13 +36,15 @@ model User {
   id                Int      @id @default(autoincrement())
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  email             String   @unique
   username          String   @unique
   password          String
-  verificationToken String?
-  authToken         String?
+  verificationToken String?  @unique
+  authToken         String?  @unique
   images            Image[]
   author            Author?  @relation(fields: [authorId], references: [id])
   authorId          Int?     @unique
+  likes             Image[]  @relation("likes")
 }
 
 model Author {
