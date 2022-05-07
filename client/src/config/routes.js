@@ -1,11 +1,4 @@
-import Home from '../pages/Home';
-import NotFound from '../pages/NotFound';
-import Search from '../pages/Search';
-import CreateImage from '../pages/CreateImage';
-import ImagePage from '../pages/ImagePage';
-import AuthorPage from '../pages/AuthorPage';
-import Register from '../pages/Register';
-import Login from '../pages/Login';
+import { lazy } from 'react';
 
 export const urls = {
   home: '/',
@@ -23,41 +16,57 @@ export const routes = [
   {
     key: 'home',
     path: urls.home,
-    element: <Home />,
+    component: lazy(() =>
+      import('../pages/Home' /* webpackChunkName: 'Home' */)
+    ),
   },
   {
     key: 'notFound',
     path: urls.notFound,
-    element: <NotFound />,
+    component: lazy(() =>
+      import('../pages/NotFound' /* webpackChunkName: 'NotFound' */)
+    ),
   },
   {
     key: 'search',
     path: urls.search,
-    element: <Search />,
+    component: lazy(() =>
+      import('../pages/Search' /* webpackChunkName: 'Search' */)
+    ),
   },
   {
     key: 'createImage',
     path: urls.createImage,
-    element: <CreateImage />,
+    component: lazy(() =>
+      import('../pages/CreateImage' /* webpackChunkName: 'CreateImage' */)
+    ),
   },
   {
     key: 'imagePage',
     path: `${urls.images}/:imageId`,
-    element: <ImagePage />,
+    component: lazy(() =>
+      import('../pages/ImagePage' /* webpackChunkName: 'ImagePage' */)
+    ),
   },
   {
     key: 'authorPage',
     path: `${urls.authors}/:authorId`,
-    element: <AuthorPage />,
+    component: lazy(() =>
+      import('../pages/AuthorPage' /* webpackChunkName: 'AuthorPage' */)
+    ),
   },
   {
     key: 'register',
     path: urls.register,
-    element: <Register />,
+    component: lazy(() =>
+      import('../pages/Register' /* webpackChunkName: 'Register' */)
+    ),
   },
   {
     key: 'login',
     path: urls.login,
-    element: <Login />,
+    component: lazy(() =>
+      import('../pages/Login' /* webpackChunkName: 'Login' */)
+    ),
   },
 ];
