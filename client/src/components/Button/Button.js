@@ -6,7 +6,7 @@ import Spinner from '../Spinner';
 function Button({
   children,
   type = 'button',
-  component: Component = 'button',
+  component = 'button',
   className,
   isLoading = false,
   variant = 'default',
@@ -31,11 +31,7 @@ function Button({
     </>
   );
 
-  if (typeof Component === 'string') {
-    return createElement(Component, finalProps, finalChildren);
-  } else {
-    return <Component {...finalProps}>{finalChildren}</Component>;
-  }
+  return createElement(component, finalProps, finalChildren);
 }
 
 export default Button;

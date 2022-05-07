@@ -23,7 +23,7 @@ function Navbar() {
             <Button component={Link} to={urls.createImage}>
               Create
             </Button>
-            <Button component={Link} to={urls.createImage}>
+            <Button component={Link} to={urls.login}>
               Login
             </Button>
             <Button component={Link} to={urls.register}>

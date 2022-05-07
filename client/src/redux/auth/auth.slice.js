@@ -13,9 +13,7 @@ export const resendVerification = createAsyncThunk(
   authApi.resendVerification
 );
 
-const oneOf = (actionTypes) => (action) => {
-  return actionTypes.includes(action.type);
-};
+const oneOf = (actionTypes) => (action) => actionTypes.includes(action.type);
 
 export const auth = createSlice({
   name: 'auth',
@@ -27,19 +25,24 @@ export const auth = createSlice({
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        oneOf([register.fulfilled, login.fulfilled]),
+        oneOf([register.fulfilled.type, login.fulfilled.type]),
         (state, { payload }) => {
           state.user = payload;
           state.loading = false;
         }
       )
-      .addMatcher(oneOf([register.pending, login.pending]), (state) => {
-        state.loading = true;
-      })
       .addMatcher(
-        oneOf([register.rejected, login.rejected]),
+        oneOf([register.pending.type, login.pending.type]),
+        (state) => {
+          state.loading = true;
+        }
+      )
+      .addMatcher(
+        oneOf([register.rejected.type, login.rejected.type]),
         (state, { payload }) => {
           state.error = payload;
+          state.loading = false;
+          // return state;
         }
       );
   },

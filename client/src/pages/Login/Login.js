@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
-import { register } from '../../redux/auth/auth.slice';
-import { getError, getLoading } from '../../redux/auth/auth.selectors';
-import styles from './Register.module.css';
+import { login } from '../../redux/auth/auth.slice';
+import { getLoading, getError } from '../../redux/auth/auth.selectors';
+import styles from './Login.module.css';
 import FormField from '../../components/FormField';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -11,25 +11,24 @@ import Alert from '../../components/Alert';
 
 function Register() {
   const dispatch = useDispatch();
+
   const loading = useSelector(getLoading);
   const error = useSelector(getError);
 
   const formik = useFormik({
     initialValues: {
       username: '',
-      email: '',
       password: '',
-      repeatPassword: '',
     },
     validateOnBlur: true,
     onSubmit: (values) => {
-      dispatch(register(values));
+      dispatch(login(values));
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <h1 className={styles.title}>Register</h1>
+      <h1 className={styles.title}>Login</h1>
 
       {error && (
         <div className={styles.alertBox}>
@@ -40,7 +39,7 @@ function Register() {
       <FormField label="Username" htmlFor="username">
         <Input
           type="text"
-          autoComplete="nickname"
+          autoComplete="nick-name"
           placeholder="Username"
           name="username"
           id="username"
@@ -63,34 +62,9 @@ function Register() {
           required
         />
       </FormField>
-      <FormField label="Repeat password" htmlFor="repeatPassword">
-        <Input
-          type="password"
-          autoComplete="new-password"
-          placeholder="Repeat password"
-          name="repeatPassword"
-          id="repeatPassword"
-          value={formik.values.repeatPassword}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          required
-        />
-      </FormField>
-      <FormField label="Email" htmlFor="email">
-        <Input
-          type="email"
-          placeholder="Email"
-          name="email"
-          id="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          required
-        />
-      </FormField>
 
       <Button type="submit" variant="secondary" isLoading={loading}>
-        Register
+        Login
       </Button>
     </form>
   );

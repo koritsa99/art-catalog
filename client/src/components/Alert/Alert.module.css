@@ -1,0 +1,5 @@
+.alert {
+  padding: 20px;
+  border: 1px solid var(--color-input-border-secondary-focus);
+  border-radius: var(--border-radius-normal);
+}

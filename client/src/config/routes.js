@@ -5,6 +5,7 @@ import CreateImage from '../pages/CreateImage';
 import ImagePage from '../pages/ImagePage';
 import AuthorPage from '../pages/AuthorPage';
 import Register from '../pages/Register';
+import Login from '../pages/Login';
 
 export const urls = {
   home: '/',
@@ -53,5 +54,10 @@ export const routes = [
     key: 'register',
     path: urls.register,
     element: <Register />,
+  },
+  {
+    key: 'login',
+    path: urls.login,
+    element: <Login />,
   },
 ];
