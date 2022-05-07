@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense } from 'react';
-import { routes } from './config/routes';
+import { routes, urls } from './config/routes';
 import Navbar from './components/Navbar';
 import Container from './components/Container';
 import Spinner from './components/Spinner';
@@ -35,7 +35,7 @@ function App() {
               }
             )}
 
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to={urls.notFound} replace />} />
           </Routes>
         </Suspense>
       </Container>
