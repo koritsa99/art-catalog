@@ -19,6 +19,8 @@ export const routes = [
     component: lazy(() =>
       import('../pages/Home' /* webpackChunkName: 'Home' */)
     ),
+    isPrivate: false,
+    isRestricted: false,
   },
   {
     key: 'notFound',
@@ -26,6 +28,8 @@ export const routes = [
     component: lazy(() =>
       import('../pages/NotFound' /* webpackChunkName: 'NotFound' */)
     ),
+    isPrivate: false,
+    isRestricted: false,
   },
   {
     key: 'search',
@@ -33,6 +37,8 @@ export const routes = [
     component: lazy(() =>
       import('../pages/Search' /* webpackChunkName: 'Search' */)
     ),
+    isPrivate: false,
+    isRestricted: false,
   },
   {
     key: 'createImage',
@@ -40,6 +46,8 @@ export const routes = [
     component: lazy(() =>
       import('../pages/CreateImage' /* webpackChunkName: 'CreateImage' */)
     ),
+    isPrivate: true,
+    isRestricted: false,
   },
   {
     key: 'imagePage',
@@ -47,6 +55,8 @@ export const routes = [
     component: lazy(() =>
       import('../pages/ImagePage' /* webpackChunkName: 'ImagePage' */)
     ),
+    isPrivate: false,
+    isRestricted: false,
   },
   {
     key: 'authorPage',
@@ -54,6 +64,8 @@ export const routes = [
     component: lazy(() =>
       import('../pages/AuthorPage' /* webpackChunkName: 'AuthorPage' */)
     ),
+    isPrivate: false,
+    isRestricted: false,
   },
   {
     key: 'register',
@@ -61,6 +73,8 @@ export const routes = [
     component: lazy(() =>
       import('../pages/Register' /* webpackChunkName: 'Register' */)
     ),
+    isPrivate: false,
+    isRestricted: true,
   },
   {
     key: 'login',
@@ -68,5 +82,7 @@ export const routes = [
     component: lazy(() =>
       import('../pages/Login' /* webpackChunkName: 'Login' */)
     ),
+    isPrivate: false,
+    isRestricted: true,
   },
 ];
