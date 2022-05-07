@@ -20,16 +20,16 @@ function ImagePage() {
       {data && (
         <>
           <div>
-            {data.imageUrls.map((imageUrl) => (
+            {data.imagesUrls.map((imageUrl) => (
               <a
                 key={imageUrl}
-                href={imageUrl}
+                href={`http://localhost:5000/images/${imageUrl}`}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.imageLink}
               >
                 <img
-                  src={imageUrl}
+                  src={`http://localhost:5000/images/${imageUrl}`}
                   alt={data.author.nickname}
                   className={styles.image}
                 />

@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
 
 import * as authApi from '../../services/authApi';
+import { setToken, unsetToken } from '../../config/axios';
 
 export const register = createAsyncThunk('auth/register', authApi.register);
 export const login = createAsyncThunk('auth/login', authApi.login);
@@ -29,6 +30,8 @@ export const auth = createSlice({
         (state, { payload }) => {
           state.user = payload;
           state.loading = false;
+          state.error = false;
+          setToken(payload.authToken);
         }
       )
       .addMatcher(
@@ -42,9 +45,14 @@ export const auth = createSlice({
         (state, { payload }) => {
           state.error = payload;
           state.loading = false;
-          // return state;
         }
-      );
+      )
+      .addMatcher(oneOf([logout.fulfilled.type]), (state) => {
+        state.user = null;
+        state.loading = false;
+        state.error = false;
+        unsetToken();
+      });
   },
 });
 

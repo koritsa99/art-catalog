@@ -12,6 +12,11 @@ exports.create = async (req, res, next) => {
 
     const newImage = await prisma.image.create({
       data: {
+        uploadedBy: {
+          connect: {
+            id: req.user.id,
+          },
+        },
         author: {
           connectOrCreate: {
             create: {
@@ -23,9 +28,7 @@ exports.create = async (req, res, next) => {
           },
         },
         originalUrl: originalUrl || null,
-        imagesUrls: req.files.map(
-          (file) => `${process.env.BASE_URL}/images/${file.filename}`
-        ),
+        imagesUrls: req.files.map((file) => file.filename),
         tags: {
           connectOrCreate: tagsArray.map((tag) => ({
             where: {
