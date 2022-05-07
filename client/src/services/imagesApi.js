@@ -1,4 +1,4 @@
-import axios from '../config/axiosDefault';
+import axios from 'axios';
 
 export function searchImages(q = '', page = 1) {
   return axios({

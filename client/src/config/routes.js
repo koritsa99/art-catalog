@@ -4,6 +4,7 @@ import Search from '../pages/Search';
 import CreateImage from '../pages/CreateImage';
 import ImagePage from '../pages/ImagePage';
 import AuthorPage from '../pages/AuthorPage';
+import Register from '../pages/Register';
 
 export const urls = {
   home: '/',
@@ -13,6 +14,8 @@ export const urls = {
   createImage: '/images/create',
   createAuthor: '/authors/create',
   search: '/search',
+  login: '/login',
+  register: '/register',
 };
 
 export const routes = [
@@ -45,5 +48,10 @@ export const routes = [
     key: 'authorPage',
     path: `${urls.authors}/:authorId`,
     element: <AuthorPage />,
+  },
+  {
+    key: 'register',
+    path: urls.register,
+    element: <Register />,
   },
 ];

@@ -23,7 +23,7 @@ function AuthorPage() {
     <div>
       {authorInfo && (
         <div>
-          <h1>{authorInfo.nickname}</h1>
+          <h1>{authorInfo.name}</h1>
           {images && images.items.length > 0 && (
             <ImagesList images={images.items} />
           )}

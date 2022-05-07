@@ -9,7 +9,7 @@ function ImageCard({ author, imageUrls, id }) {
   return (
     <div className={styles.card}>
       <Link to={`${urls.images}/${id}`} className={styles.link}>
-        <img src={imageUrls[0]} alt={author} className={styles.image} />
+        <img src={imageUrls[0]} alt={author.name} className={styles.image} />
       </Link>
       <div className={styles.options}>
         <IconButton icon={BsPencil} />
