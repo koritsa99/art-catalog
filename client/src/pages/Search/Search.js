@@ -1,16 +1,27 @@
-import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import qs from 'query-string';
 
 import ImagesResults from './ImagesResults';
 
 function Search() {
-  const [searchType, setSearchType] = useState('image');
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const { searchType, q } = qs.parse(location.search);
   function handleChangeSearchType(e) {
-    setSearchType(e.target.value);
+    navigate({
+      pathname: location.pathname,
+      search: qs.stringify({
+        q,
+        searchType: e.target.value,
+      }),
+    });
   }
 
   return (
     <div>
+      <h2>Search results for "{q}"</h2>
+
       <div>
         <div>
           <label htmlFor="searchTypeImage">Image</label>
@@ -35,7 +46,7 @@ function Search() {
           />
         </div>
       </div>
-      {searchType === 'image' && <ImagesResults />}
+      {searchType === 'image' && <ImagesResults q={q} />}
     </div>
   );
 }

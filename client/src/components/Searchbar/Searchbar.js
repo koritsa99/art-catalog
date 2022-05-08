@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import qs from 'query-string';
 
 import styles from './Searchbar.module.css';
 import { urls } from '../../config/routes';
@@ -16,7 +17,13 @@ function Searchbar() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    navigate(urls.search + `?q=${query}`);
+    navigate({
+      pathname: urls.search,
+      search: qs.stringify({
+        q: query,
+        searchType: 'image',
+      }),
+    });
   }
 
   return (

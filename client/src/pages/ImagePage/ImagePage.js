@@ -45,7 +45,12 @@ function ImagePage() {
           </Link>
           <div>
             {data.tags.map((tag) => (
-              <Button key={tag.id} variant="secondary">
+              <Button
+                key={tag.id}
+                variant="secondary"
+                component={Link}
+                to={`${urls.search}?q=${tag.title}&searchType=image`}
+              >
                 {tag.title}
               </Button>
             ))}
