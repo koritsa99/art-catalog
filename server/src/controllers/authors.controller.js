@@ -93,6 +93,7 @@ exports.getImages = async (req, res, next) => {
     const images = await prisma.image.findMany({
       include: {
         tags: true,
+        author: true,
       },
       where: filter,
       take: perPage,
