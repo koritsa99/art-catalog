@@ -1,16 +1,17 @@
 import { useMutation, useQuery } from 'react-query';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './CreateImage.module.css';
+import * as imagesApi from '../../services/imagesApi';
+import * as authorsApi from '../../services/authorsApi';
+import { urls } from '../../config/routes';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import FormField from '../../components/FormField';
 import FileUpload from '../../components/FileUpload';
 import Autocomplete from '../../components/Autocomplete';
-import * as imagesApi from '../../services/imagesApi';
-import * as authorsApi from '../../services/authorsApi';
-import { urls } from '../../config/routes';
+import DebounceInput from '../../components/DebounceInput';
 
 function CreateImage() {
   const [author, setAuthor] = useState('');
@@ -23,11 +24,9 @@ function CreateImage() {
       navigate(`${urls.images}/${newImage.id}`);
     },
   });
-  const {
-    data: authors,
-    isLoading,
-    error,
-  } = useQuery(['authors', author], () => authorsApi.fetchAuthors(author));
+  const { data: authors } = useQuery(['authors', author], () =>
+    authorsApi.fetchAuthors(author)
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -51,23 +50,27 @@ function CreateImage() {
             />
           </FormField>
           <FormField label="Author">
-            <Autocomplete
+            <DebounceInput
+              element={Autocomplete}
+              debounceTimeout={500}
               name="author"
               placeholder="Author"
               id="createImageAuthor"
               options={
                 authors && authors.items.length > 0
-                  ? authors.items.map((author) => author.nickname)
+                  ? authors.items.map((author) => author.name)
                   : []
               }
               value={author}
-              onChange={(e) => setAuthor(e.currentTarget.value)}
+              onChange={(e) => setAuthor(e.target.value)}
               onSelect={(option) => setAuthor(option)}
               required
             />
           </FormField>
           <FormField label="Tags">
-            <Autocomplete
+            <DebounceInput
+              element={Autocomplete}
+              debounceTimeout={500}
               name="tags"
               placeholder="Tags eg. tag1, tag2"
               id="createImageTags"
@@ -79,7 +82,7 @@ function CreateImage() {
                 'anal_insertion',
               ].filter((tag) => tag.toLowerCase().includes(tags.toLowerCase()))}
               value={tags}
-              onChange={(e) => setTags(e.currentTarget.value)}
+              onChange={(e) => setTags(e.target.value)}
               onSelect={(option) => setTags(option)}
             />
           </FormField>
