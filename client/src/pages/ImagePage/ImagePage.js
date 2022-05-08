@@ -24,13 +24,13 @@ function ImagePage() {
             {data.imagesUrls.map((imageUrl) => (
               <a
                 key={imageUrl}
-                href={`http://localhost:5000/images/${imageUrl}`}
+                href={`${process.env.REACT_APP_API_URL}/images/${imageUrl}`}
                 target="_blank"
                 rel="noreferrer"
                 className={styles.imageLink}
               >
                 <img
-                  src={`http://localhost:5000/images/${imageUrl}`}
+                  src={`${process.env.REACT_APP_API_URL}/images/${imageUrl}`}
                   alt={data.author.name}
                   className={styles.image}
                 />

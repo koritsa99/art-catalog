@@ -10,7 +10,7 @@ function ImageCard({ author, imagesUrls, id, controls = false }) {
     <div className={styles.card}>
       <Link to={`${urls.images}/${id}`} className={styles.link}>
         <img
-          src={`http://localhost:5000/images/${imagesUrls[0]}`}
+          src={`${process.env.REACT_APP_API_URL}/images/${imagesUrls[0]}`}
           alt={author.name}
           className={styles.image}
         />

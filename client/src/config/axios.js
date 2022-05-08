@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000/api/v1';
+axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}/api/v1`;
 
 export function setToken(token) {
   axios.defaults.headers.authorization = `Bearer ${token}`;
