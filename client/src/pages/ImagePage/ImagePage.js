@@ -5,6 +5,7 @@ import styles from './ImagePage.module.css';
 import * as imagesApi from '../../services/imagesApi';
 import { urls } from '../../config/routes';
 import Container from '../../components/Container';
+import Button from '../../components/Button';
 
 function ImagePage() {
   const { imageId } = useParams();
@@ -30,18 +31,23 @@ function ImagePage() {
               >
                 <img
                   src={`http://localhost:5000/images/${imageUrl}`}
-                  alt={data.author.nickname}
+                  alt={data.author.name}
                   className={styles.image}
                 />
               </a>
             ))}
           </div>
-          <Link to={`${urls.authors}/${data.author.id}`}>
-            <h3>{data.author.nickname}</h3>
+          <Link
+            to={`${urls.authors}/${data.author.id}`}
+            className={styles.author}
+          >
+            {data.author.name}
           </Link>
           <div>
             {data.tags.map((tag) => (
-              <span key={tag.id}>{tag.title}</span>
+              <Button key={tag.id} variant="secondary">
+                {tag.title}
+              </Button>
             ))}
           </div>
         </>

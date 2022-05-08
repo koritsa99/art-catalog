@@ -5,7 +5,7 @@ import styles from './ImageCard.module.css';
 import IconButton from '../IconButton';
 import { urls } from '../../config/routes';
 
-function ImageCard({ author, imagesUrls, id }) {
+function ImageCard({ author, imagesUrls, id, controls = false }) {
   return (
     <div className={styles.card}>
       <Link to={`${urls.images}/${id}`} className={styles.link}>
@@ -15,10 +15,12 @@ function ImageCard({ author, imagesUrls, id }) {
           className={styles.image}
         />
       </Link>
-      <div className={styles.options}>
-        <IconButton icon={BsPencil} />
-        <IconButton icon={BsX} />
-      </div>
+      {controls && (
+        <div className={styles.options}>
+          <IconButton icon={BsPencil} />
+          <IconButton icon={BsX} />
+        </div>
+      )}
     </div>
   );
 }
