@@ -16,7 +16,7 @@ function Navbar() {
       <Container>
         <div className={styles.content}>
           <Link to={urls.home} className={styles.logo}>
-            Art Catalog
+            <img src="/logo.png" alt="Logo" width={50} />
           </Link>
           <div className={styles.searchbarBox}>
             <Searchbar />
