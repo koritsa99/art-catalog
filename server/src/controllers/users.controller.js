@@ -28,7 +28,12 @@ exports.getLikes = async (req, res, next) => {
         id: +userId,
       },
       include: {
-        likes: true,
+        likes: {
+          include: {
+            author: true,
+            tags: true,
+          },
+        },
       },
     });
     if (!user) {
@@ -51,7 +56,12 @@ exports.getUploads = async (req, res, next) => {
         id: +userId,
       },
       include: {
-        images: true,
+        images: {
+          include: {
+            author: true,
+            tags: true,
+          },
+        },
       },
     });
     if (!user) {
