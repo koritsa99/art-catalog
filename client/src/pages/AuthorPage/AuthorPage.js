@@ -1,21 +1,16 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
+import styles from './AuthorPage.module.css';
 import * as authorsApi from '../../services/authorsApi';
 import ImagesList from '../../components/ImagesList';
 
 function AuthorPage() {
   const { authorId } = useParams();
-  const {
-    data: authorInfo,
-    isLoading: authorInfoLoading,
-    error: authorError,
-  } = useQuery(['author', authorId], () => authorsApi.findByid(authorId));
-  const {
-    data: images,
-    isLoading: imagesLoading,
-    error: imagesError,
-  } = useQuery(['images', authorId], () =>
+  const { data: authorInfo } = useQuery(['author', authorId], () =>
+    authorsApi.findByid(authorId)
+  );
+  const { data: images } = useQuery(['images', authorId], () =>
     authorsApi.getAuthorImages(authorId)
   );
 
@@ -23,7 +18,7 @@ function AuthorPage() {
     <div>
       {authorInfo && (
         <div>
-          <h1>{authorInfo.name}</h1>
+          <h1 className={styles.authorName}>{authorInfo.name} works</h1>
           {images && images.items.length > 0 && (
             <ImagesList images={images.items} />
           )}

@@ -24,7 +24,7 @@ function CreateImage() {
       navigate(`${urls.images}/${newImage.id}`);
     },
   });
-  const { data: authors } = useQuery(['authors', author], () =>
+  const authors = useQuery(['authors', author], () =>
     authorsApi.fetchAuthors(author)
   );
 
@@ -57,8 +57,8 @@ function CreateImage() {
               placeholder="Author"
               id="createImageAuthor"
               options={
-                authors && authors.items.length > 0
-                  ? authors.items.map((author) => author.name)
+                authors.data && authors.data.items.length > 0
+                  ? authors.data.items.map((author) => author.name)
                   : []
               }
               value={author}

@@ -4,13 +4,13 @@ import * as imagesApi from '../../services/imagesApi';
 import ImagesList from '../../components/ImagesList';
 
 function Home() {
-  const { data, isLoading, error } = useQuery('images', () =>
-    imagesApi.searchImages()
-  );
+  const images = useQuery('images', () => imagesApi.searchImages());
 
   return (
     <div>
-      {data && data.items.length > 0 && <ImagesList images={data.items} />}
+      {images.data && images.data.items.length > 0 && (
+        <ImagesList images={images.data.items} />
+      )}
     </div>
   );
 }
