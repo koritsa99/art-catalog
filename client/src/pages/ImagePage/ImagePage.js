@@ -3,25 +3,29 @@ import { useQuery } from 'react-query';
 
 import styles from './ImagePage.module.css';
 import * as imagesApi from '../../services/imagesApi';
+import * as usersApi from '../../services/usersApi';
 import { urls } from '../../config/routes';
 import Container from '../../components/Container';
 import Button from '../../components/Button';
+import ImagesList from '../../components/ImagesList';
 
 function ImagePage() {
   const { imageId } = useParams();
 
-  const { data, isLoading, error } = useQuery('image', () =>
-    imagesApi.fetchImageDetails(imageId)
+  const image = useQuery('image', () => imagesApi.fetchImageDetails(imageId));
+  const userUploads = useQuery(
+    ['user', image],
+    () => image.data && usersApi.getUploads(image.data.uploaderId)
   );
 
   return (
     <Container>
-      {error && <p>{JSON.stringify(error)}</p>}
-      {isLoading && <p>Loading...</p>}
-      {data && (
+      {image.isError && <p>{JSON.stringify(image.error)}</p>}
+      {image.isLoading && <p>Loading...</p>}
+      {image.data && (
         <>
           <div>
-            {data.imagesUrls.map((imageUrl) => (
+            {image.data.imagesUrls.map((imageUrl) => (
               <a
                 key={imageUrl}
                 href={`${process.env.REACT_APP_API_URL}/images/${imageUrl}`}
@@ -31,20 +35,24 @@ function ImagePage() {
               >
                 <img
                   src={`${process.env.REACT_APP_API_URL}/images/${imageUrl}`}
-                  alt={data.author.name}
+                  alt={image.data.author.name}
                   className={styles.image}
                 />
               </a>
             ))}
           </div>
-          <Link
-            to={`${urls.authors}/${data.author.id}`}
-            className={styles.author}
-          >
-            {data.author.name}
-          </Link>
-          <div>
-            {data.tags.map((tag) => (
+          <p className={styles.uploader}>
+            Uploaded by{' '}
+            <Link
+              to={`${urls.users}/${image.data.uploadedBy.id}`}
+              className={styles.uploaderLink}
+            >
+              {image.data.uploadedBy.username}
+            </Link>
+          </p>
+
+          <div className={styles.tags}>
+            {image.data.tags.map((tag) => (
               <Button
                 key={tag.id}
                 variant="secondary"
@@ -55,8 +63,34 @@ function ImagePage() {
               </Button>
             ))}
           </div>
+
+          <div className={styles.author}>
+            <img
+              src="/avatar.jpg"
+              alt="Avatar"
+              width={64}
+              height={64}
+              className={styles.authorAvatar}
+            />
+            <div className={styles.authorInfo}>
+              <Link
+                to={`${urls.authors}/${image.data.author.id}`}
+                className={styles.authorName}
+              >
+                {image.data.author.name}
+              </Link>
+            </div>
+            <div className={styles.authorFollow}>
+              <Button variant="secondary">Follow</Button>
+            </div>
+          </div>
         </>
       )}
+
+      <section className={styles.recommended}>
+        <h2 className={styles.sectionTitle}>Users also like</h2>
+        {userUploads.data && <ImagesList images={userUploads.data} />}
+      </section>
     </Container>
   );
 }

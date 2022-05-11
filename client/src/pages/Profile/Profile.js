@@ -21,13 +21,15 @@ function Profile() {
           <img src="/avatar.jpg" alt="" className={styles.avatar} />
 
           <h1 className={styles.username}>{user.data.username}</h1>
-          <Button
-            variant="secondary"
-            component={Link}
-            to={`${urls.authors}/${user.data.authorId}`}
-          >
-            Author page
-          </Button>
+          {user.data.authorId && (
+            <Button
+              variant="secondary"
+              component={Link}
+              to={`${urls.authors}/${user.data.authorId}`}
+            >
+              Author page
+            </Button>
+          )}
 
           <div className={styles.stats}>
             <div className={styles.statsItem}>
@@ -44,15 +46,19 @@ function Profile() {
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Likes</h2>
-        {likes.data ? <ImagesList images={likes.data} /> : <p>No likes</p>}
+        {likes.data && likes.data.length > 0 ? (
+          <ImagesList images={likes.data} />
+        ) : (
+          <p className={styles.sectionText}>No likes</p>
+        )}
       </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Uploads</h2>
-        {uploads.data ? (
+        {uploads.data && uploads.data.length > 0 ? (
           <ImagesList images={uploads.data} />
         ) : (
-          <p>No uploads</p>
+          <p className={styles.sectionText}>No uploads</p>
         )}
       </section>
     </div>

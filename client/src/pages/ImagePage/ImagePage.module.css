@@ -12,15 +12,51 @@
   border-radius: var(--border-radius-normal);
 }
 
-.author {
-  display: block;
-  margin: 12px 0;
-  font-size: 24px;
-  font-weight: 700;
+.uploader {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.uploaderLink {
+  text-decoration: underline;
 }
 
 .tags {
+  margin-bottom: 24px;
 }
 
 .tagItem {
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 50px;
+}
+
+.authorAvatar {
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.authorName {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.authorFollow {
+  margin-left: auto;
+}
+
+.recommended {
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  margin-bottom: 12px;
 }

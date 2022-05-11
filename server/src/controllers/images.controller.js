@@ -128,6 +128,7 @@ exports.getById = async (req, res, next) => {
       include: {
         author: true,
         tags: true,
+        uploadedBy: true,
       },
     });
 
