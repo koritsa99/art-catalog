@@ -12,7 +12,9 @@ import ImagesList from '../../components/ImagesList';
 function ImagePage() {
   const { imageId } = useParams();
 
-  const image = useQuery('image', () => imagesApi.fetchImageDetails(imageId));
+  const image = useQuery(['image', imageId], () =>
+    imagesApi.fetchImageDetails(imageId)
+  );
   const userUploads = useQuery(
     ['user', image],
     () => image.data && usersApi.getUploads(image.data.uploaderId)
