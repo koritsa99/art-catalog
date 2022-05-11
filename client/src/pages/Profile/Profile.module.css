@@ -1,0 +1,41 @@
+.container {
+}
+
+.header {
+  position: relative;
+  text-align: center;
+}
+
+.avatar {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+.username {
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.statsItem {
+}
+
+.statsTitle {
+}
+
+.statsText {
+}
+
+.section {
+}
+
+.sectionTitle {
+}

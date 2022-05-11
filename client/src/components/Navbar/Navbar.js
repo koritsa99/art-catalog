@@ -39,7 +39,7 @@ function Navbar() {
               </Button>
             )}
             {user && (
-              <Button component={Link} to={urls.authors}>
+              <Button component={Link} to={`${urls.users}/${user.id}`}>
                 Profile
               </Button>
             )}

@@ -10,6 +10,7 @@ export const urls = {
   search: '/search',
   login: '/login',
   register: '/register',
+  users: '/users',
 };
 
 export const routes = [
@@ -84,5 +85,14 @@ export const routes = [
     ),
     isPrivate: false,
     isRestricted: true,
+  },
+  {
+    key: 'profile',
+    path: `${urls.users}/:userId`,
+    component: lazy(() =>
+      import('../pages/Profile' /* webpackChunkName: 'Profile' */)
+    ),
+    isPrivate: false,
+    isRestricted: false,
   },
 ];
