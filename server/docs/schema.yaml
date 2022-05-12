@@ -133,6 +133,11 @@ components:
           $ref: "#/components/schemas/Author"
         authorId:
           type: integer
+  securitySchemes:
+    JWT:
+      scheme: bearer
+      type: http
+      bearerFormat: jwt
 paths:
   /auth/login:
     post:
@@ -155,8 +160,78 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-                  
-                                    
+  /auth/register:
+    post:
+      summary: Register user
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /auth/logout:
+    post:
+      description: Logout user
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Success"
+  /auth/resend-verification:
+    post:
+      description: Resend verification token to email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /auth/verify/{verificationToken}:
+    get:
+      summary: Verify user account
+      parameters:
+        - in: path
+          name: verificationToken
+          schema:
+            type: string
+          required: true
+          description: Verification token
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
   /users:
     get:
       summary: Returns a list of users.

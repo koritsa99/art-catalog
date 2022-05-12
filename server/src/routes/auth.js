@@ -14,7 +14,7 @@ const router = express.Router();
 router.post('/login', login);
 router.post('/register', register);
 router.post('/logout', logout);
-router.get('/resend-verification', resendVerificationToken);
+router.post('/resend-verification', resendVerificationToken);
 router.get('/verify/:verificationToken', verify);
 
 module.exports = router;
