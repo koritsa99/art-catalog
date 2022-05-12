@@ -185,7 +185,8 @@ paths:
                 $ref: "#/components/schemas/User"
   /auth/logout:
     post:
-      description: Logout user
+      summary: Logout user
+      operationId: logout
       security:
         - JWT: []
       responses:
@@ -198,7 +199,8 @@ paths:
                 example: "Success"
   /auth/resend-verification:
     post:
-      description: Resend verification token to email
+      summary: Resend verification token to email
+      operationId: resendVerification
       requestBody:
         content:
           application/json:
@@ -217,6 +219,7 @@ paths:
   /auth/verify/{verificationToken}:
     get:
       summary: Verify user account
+      operationId: verifyUser
       parameters:
         - in: path
           name: verificationToken
@@ -232,17 +235,212 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
 
-  /users:
+  /authors:
     get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      operationId: getUsers
+      summary: Search authors
+      operationId: searchAuthors
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: page
+          schema:
+            type: number
+          required: true
       responses:
         '200':
-          description: A JSON array of user names
+          description: Authors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Author"
+                  count:
+                    type: number
+                  page:
+                    type: number
+                  perPage:
+                    type: number
+                  pagesCount:
+                    type: number
+  /authors/{authorId}:
+    get:
+      summary: Get author by id
+      operationId: getAuthorById
+      parameters:
+        - in: path
+          name: authorId
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Author
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+  /authors/{authorId}/images:
+    get:
+      summary: Get author works
+      operationId: getAuthorWorks
+      parameters:
+        - in: path
+          name: authorId
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Author works
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Image"
+  
+  /images:
+    post:
+      summary: Create new image
+      operationId: createImage
+      security:
+        - JWT: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                author:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                originalUrl:
+                  type: string
+      responses:
+        '200':
+          description: New image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+    get:
+      summary: Search images
+      operationId: searchImages
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: page
+          schema:
+            type: number
+          required: true
+      responses:
+        '200':
+          description: Images
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Image"
+                  count:
+                    type: number
+                  page:
+                    type: number
+                  perPage:
+                    type: number
+                  pagesCount:
+                    type: number
+  /images/{imageId}:
+    get:
+      summary: Get image by id
+      operationId: getImageById
+      parameters:
+        - in: path
+          name: imageId
+          schema:
+            type: number
+          required: true
+      responses:
+        '200':
+          description: Image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+  
+  /users/{userId}:
+    get:
+      summary: Get user by id
+      operationId: getUserById
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: number
+          required: true
+      responses:
+        '200':
+          description: User
           content:
             application/json:
               schema: 
+                $ref: "#/components/schemas/User"
+  /users/{userId}/likes:
+    get:
+      summary: Get user likes
+      operationId: getUserLikes
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: number
+          required: true
+      responses:
+        '200':
+          description: User likes
+          content:
+            application/json:
+              schema:
                 type: array
-                items: 
-                  type: string
+                items:
+                  $ref: "#/components/schemas/Image"
+  /users/{userId}/uploads:
+    get:
+      summary: Get user uploads
+      operationId: getUserUploads
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: number
+          required: true
+      responses:
+        '200':
+          description: User uploads
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Image"
