@@ -27,13 +27,14 @@ app.use(
 );
 
 app.use('/api/v1', apiRouter);
-app.get('/images/:fileName', async (req, res, next) => {
-  try {
-    const imagePath = path.join(IMAGES_PATH, req.params.fileName);
-    res.sendFile(imagePath);
-  } catch (error) {
-    next(error);
-  }
+app.get('/images/:fileName', (req, res) => {
+  const imagePath = path.join(IMAGES_PATH, req.params.fileName);
+  res.sendFile(imagePath);
+});
+
+app.get('/docs/schema', (req, res) => {
+  const docsSchemaPath = path.join(process.cwd(), 'docs/schema.yaml');
+  res.sendFile(docsSchemaPath);
 });
 
 app.use((error, req, res, next) => {

@@ -10,7 +10,7 @@ import './config/axios';
 import App from './App';
 import { store, persistor } from './redux/store';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement);
+const root = ReactDOM.createRoot(document.getElementById('root')!);
 const queryClient = new QueryClient();
 
 root.render(
