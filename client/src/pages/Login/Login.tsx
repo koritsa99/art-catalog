@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 
 import { login } from '../../redux/auth/auth.operations';
 import { getLoading, getError } from '../../redux/auth/auth.selectors';
-import { AsyncActionDispatch } from '../../redux/store';
+import { AppDispatch } from '../../redux/store';
 import styles from './Login.module.css';
 import FormField from '../../components/FormField';
 import Input from '../../components/Input';
@@ -11,7 +11,7 @@ import Button from '../../components/Button';
 import Alert from '../../components/Alert';
 
 function Register() {
-  const dispatch = useDispatch<AsyncActionDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const loading = useSelector(getLoading);
   const error = useSelector(getError);

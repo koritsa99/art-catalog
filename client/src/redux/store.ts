@@ -8,7 +8,6 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import thunk from 'redux-thunk';
 
 import auth from './auth/auth.slice';
 
@@ -21,8 +20,8 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(thunk),
+    }),
 });
 export type RootState = ReturnType<typeof store.getState>;
-export type AsyncActionDispatch = any;
+export type AppDispatch = typeof store.dispatch;
 export const persistor = persistStore(store);
