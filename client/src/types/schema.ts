@@ -49,66 +49,66 @@ export interface paths {
 export interface components {
   schemas: {
     Image: {
-      id?: number;
+      id: number;
       /** Format: date-time */
-      createdAt?: string;
+      createdAt: string;
       /** Format: date-time */
-      updatedAt?: string;
-      imagesUrls?: string[];
+      updatedAt: string;
+      imagesUrls: string[];
       originalUrl?: string;
-      tags?: components["schemas"]["Tag"][];
-      uploadedBy?: components["schemas"]["User"];
-      uploaderId?: number;
-      author?: components["schemas"]["Author"];
-      authorId?: number;
-      likedBy?: components["schemas"]["User"][];
+      tags: components["schemas"]["Tag"][];
+      uploadedBy: components["schemas"]["User"];
+      uploaderId: number;
+      author: components["schemas"]["Author"];
+      authorId: number;
+      likedBy: components["schemas"]["User"][];
     };
     Tag: {
-      id?: number;
+      id: number;
       /** Format: date-time */
-      createdAt?: string;
+      createdAt: string;
       /** Format: date-time */
-      updatedAt?: string;
-      title?: string;
-      images?: components["schemas"]["Image"][];
+      updatedAt: string;
+      title: string;
+      images: components["schemas"]["Image"][];
     };
     User: {
-      id?: number;
+      id: number;
       /** Format: date-time */
-      createdAt?: string;
+      createdAt: string;
       /** Format: date-time */
-      updatedAt?: string;
-      email?: string;
-      username?: string;
-      password?: string;
+      updatedAt: string;
+      email: string;
+      username: string;
+      password: string;
       verificationToken?: string;
       authToken?: string;
-      images?: components["schemas"]["Image"][];
+      images: components["schemas"]["Image"][];
       author?: components["schemas"]["Author"];
       authorId?: number;
-      likes?: components["schemas"]["Image"][];
+      likes: components["schemas"]["Image"][];
     };
     Author: {
-      id?: number;
+      id: number;
       /** Format: date-time */
-      createdAt?: string;
+      createdAt: string;
       /** Format: date-time */
-      updatedAt?: string;
-      name?: string;
-      urls?: components["schemas"]["WebsiteUrl"][];
-      images?: components["schemas"]["Image"][];
+      updatedAt: string;
+      name: string;
+      urls: components["schemas"]["WebsiteUrl"][];
+      images: components["schemas"]["Image"][];
       user?: components["schemas"]["User"];
     };
     WebsiteUrl: {
-      id?: number;
+      id: number;
       /** Format: date-time */
-      createdAt?: string;
+      createdAt: string;
       /** Format: date-time */
-      updatedAt?: string;
-      title?: string;
-      url?: string;
-      author?: components["schemas"]["Author"];
-      authorId?: number;
+      updatedAt: string;
+      title: string;
+      url: string;
+      author: components["schemas"]["Author"];
+      authorId: number;
     };
   };
 }
@@ -126,8 +126,8 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": {
-          username?: string;
-          password?: string;
+          username: string;
+          password: string;
         };
       };
     };
@@ -144,9 +144,9 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": {
-          email?: string;
-          username?: string;
-          password?: string;
+          email: string;
+          username: string;
+          password: string;
         };
       };
     };
@@ -173,7 +173,7 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": {
-          email?: string;
+          email: string;
         };
       };
     };
@@ -206,11 +206,11 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            items?: components["schemas"]["Author"][];
-            count?: number;
-            page?: number;
-            perPage?: number;
-            pagesCount?: number;
+            items: components["schemas"]["Author"][];
+            count: number;
+            page: number;
+            perPage: number;
+            pagesCount: number;
           };
         };
       };
@@ -219,7 +219,7 @@ export interface operations {
   getAuthorById: {
     parameters: {
       path: {
-        authorId: string;
+        authorId: number;
       };
     };
     responses: {
@@ -234,14 +234,20 @@ export interface operations {
   getAuthorWorks: {
     parameters: {
       path: {
-        authorId: string;
+        authorId: number;
       };
     };
     responses: {
       /** Author works */
       200: {
         content: {
-          "application/json": components["schemas"]["Image"][];
+          "application/json": {
+            items: components["schemas"]["Image"][];
+            count: number;
+            page: number;
+            perPage: number;
+            pagesCount: number;
+          };
         };
       };
     };
@@ -258,11 +264,11 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            items?: components["schemas"]["Image"][];
-            count?: number;
-            page?: number;
-            perPage?: number;
-            pagesCount?: number;
+            items: components["schemas"]["Image"][];
+            count: number;
+            page: number;
+            perPage: number;
+            pagesCount: number;
           };
         };
       };
@@ -281,9 +287,9 @@ export interface operations {
       content: {
         "multipart/form-data": {
           /** Format: binary */
-          image?: string;
-          author?: string;
-          tags?: string[];
+          image: string;
+          author: string;
+          tags: string[];
           originalUrl?: string;
         };
       };

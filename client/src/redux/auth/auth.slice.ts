@@ -1,59 +1,87 @@
 import { createSlice, createAsyncThunk, Action } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { setToken, unsetToken } from '../../config/axios';
+import { User } from '../../types/entities';
+import { LoginResponseDTO, RegisterResponseDTO } from '../../types/responses';
+import { LoginRequestDTO } from '../../types/requests';
 
-export const register = createAsyncThunk('auth/register', async (userData: any, thunkApi) => {
-  try {
-    const res = await axios({
-      method: 'POST',
-      url: '/auth/register',
-      data: userData,
-    });
-    return res.data;
-  } catch (error: any) {
-    return thunkApi.rejectWithValue(error.response.data);
+export const register = createAsyncThunk<any, any>(
+  'auth/register',
+  async (userData, thunkApi) => {
+    try {
+      const res = await axios.post('/auth/register', userData);
+      thunkApi.fulfillWithValue(res.data);
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return thunkApi.rejectWithValue(error.response.data);
+      } else {
+        return 'Error';
+      }
+    }
   }
-});
+);
 
-export const login = createAsyncThunk<any, any, any>('auth/login', async (userData: any, thunkApi) => {
-  try {
-    const res = await axios({
-      method: 'POST',
-      url: '/auth/login',
-      data: userData,
-    });
-    return res.data;
-  } catch (error: any) {
-    return thunkApi.rejectWithValue(error.response.data);
+export const login = createAsyncThunk(
+  'auth/login',
+  async (userData: LoginRequestDTO, thunkApi) => {
+    try {
+      const res = await axios({
+        method: 'POST',
+        url: '/auth/login',
+        data: userData,
+      });
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return thunkApi.rejectWithValue(error.response.data);
+      } else {
+        return 'Error';
+      }
+    }
   }
-});
+);
 
-export const logout = createAsyncThunk('auth/logout', async (_args, thunkApi) => {
-  try {
-    const res = await axios({
-      method: 'POST',
-      url: '/auth/logout',
-    });
-    return res.data;
-  } catch (error: any) {
-    return thunkApi.rejectWithValue(error.response.data);
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async (_args: undefined, thunkApi) => {
+    try {
+      const res = await axios({
+        method: 'POST',
+        url: '/auth/logout',
+      });
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return thunkApi.rejectWithValue(error.response.data);
+      } else {
+        return 'Error';
+      }
+    }
   }
-});
+);
 
-export const verify = createAsyncThunk('auth/verify', async (verificationToken: string, thunkApi) => {
-  try {
-    const res = await axios({
-      method: 'GET',
-      url: `/auth/verify/${verificationToken}`,
-    });
-    return res.data;
-  } catch (error: any) {
-    return thunkApi.rejectWithValue(error.response.data);
+export const verify = createAsyncThunk(
+  'auth/verify',
+  async (verificationToken: string, thunkApi) => {
+    try {
+      const res = await axios({
+        method: 'GET',
+        url: `/auth/verify/${verificationToken}`,
+      });
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return thunkApi.rejectWithValue(error.response.data);
+      } else {
+        return 'Error';
+      }
+    }
   }
-});
+);
 
 export const resendVerification = createAsyncThunk(
   'auth/resendVerification',
@@ -65,19 +93,24 @@ export const resendVerification = createAsyncThunk(
         data: { email },
       });
       return res.data;
-    } catch (error: any) {
-      return thunkApi.rejectWithValue(error.response.data);
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return thunkApi.rejectWithValue(error.response.data);
+      } else {
+        return 'Error';
+      }
     }
   }
 );
 
 interface IAuthState {
-  user: any;
+  user: User | null;
   loading: boolean;
   error: string | null;
 }
 
-const oneOf = (actionTypes: string[]) => (action: Action) => actionTypes.includes(action.type);
+const oneOf = (actionTypes: string[]) => (action: Action) =>
+  actionTypes.includes(action.type);
 
 export const auth = createSlice({
   name: 'auth',
@@ -89,6 +122,11 @@ export const auth = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(register.fulfilled, (state, action) => {
+        if (typeof action.payload != 'string') {
+          state.user = action.payload;
+        }
+      })
       .addMatcher(
         oneOf([register.fulfilled.type, login.fulfilled.type]),
         (state, { payload }) => {

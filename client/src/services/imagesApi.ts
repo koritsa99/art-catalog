@@ -1,6 +1,15 @@
 import axios from 'axios';
 
-export async function searchImages(q = '', page = 1) {
+import {
+  SearchImagesResponseDTO,
+  CreateImageResponseDTO,
+  GetImageByIdResponseDTO,
+} from '../types/responses';
+
+export async function searchImages(
+  q = '',
+  page = 1
+): Promise<SearchImagesResponseDTO> {
   const { data } = await axios({
     method: 'GET',
     url: '/images',
@@ -9,16 +18,20 @@ export async function searchImages(q = '', page = 1) {
   return data;
 }
 
-export async function createImage(data: any) {
-  const { data: data_1 } = await axios({
+export async function createImage(
+  imageData: FormData
+): Promise<CreateImageResponseDTO> {
+  const { data } = await axios({
     method: 'POST',
     url: '/images',
-    data,
+    data: imageData,
   });
-  return data_1;
+  return data;
 }
 
-export async function fetchImageDetails(imageId: number) {
+export async function fetchImageDetails(
+  imageId: number
+): Promise<GetImageByIdResponseDTO> {
   const { data } = await axios({
     method: 'GET',
     url: `/images/${imageId}`,

@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-export async function findById(userId: number) {
+import {
+  GetUserByIdResponseDTO,
+  GetUserLikesResponseDTO,
+  GetUserUploadsResponseDTO,
+} from '../types/responses';
+
+export async function findById(
+  userId: number
+): Promise<GetUserByIdResponseDTO> {
   const res = await axios({
     method: 'GET',
     url: `/users/${userId}`,
@@ -8,7 +16,9 @@ export async function findById(userId: number) {
   return res.data;
 }
 
-export async function getLikes(userId: number) {
+export async function getLikes(
+  userId: number
+): Promise<GetUserLikesResponseDTO> {
   const res = await axios({
     method: 'GET',
     url: `/users/${userId}/likes`,
@@ -16,7 +26,9 @@ export async function getLikes(userId: number) {
   return res.data;
 }
 
-export async function getUploads(userId: number) {
+export async function getUploads(
+  userId: number
+): Promise<GetUserUploadsResponseDTO> {
   const res = await axios({
     method: 'GET',
     url: `/users/${userId}/uploads`,
