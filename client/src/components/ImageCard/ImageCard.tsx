@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom';
 import styles from './ImageCard.module.css';
 import IconButton from '../IconButton';
 import { urls } from '../../config/routes';
+import { Image } from '../../types/entities';
 
-interface IProps {
-  author: any;
-  imagesUrls: string[];
-  id: number;
-  controls: boolean;
+interface IProps extends Image {
+  controls?: boolean;
 }
 
 function ImageCard({ author, imagesUrls, id, controls = false }: IProps) {

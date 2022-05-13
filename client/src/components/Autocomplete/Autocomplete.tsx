@@ -6,10 +6,10 @@ import Button from '../Button';
 import { useClickOutside } from '../../hooks/useClickOutside';
 
 interface IProps extends React.ComponentPropsWithoutRef<'input'> {
-  options: any[];
+  options: string[];
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSelectOption: (option: any, i: number) => void;
+  onSelectOption: (option: string, i: number) => void;
 }
 
 function Autocomplete({

@@ -27,7 +27,7 @@ function ImagePage() {
       {image.data && (
         <>
           <div>
-            {image.data.imagesUrls.map((imageUrl: string) => (
+            {image.data.imagesUrls.map((imageUrl) => (
               <a
                 key={imageUrl}
                 href={`${process.env.REACT_APP_API_URL}/images/${imageUrl}`}
@@ -54,7 +54,7 @@ function ImagePage() {
           </p>
 
           <div className={styles.tags}>
-            {image.data.tags.map((tag: any) => (
+            {image.data.tags.map((tag) => (
               <Button
                 key={tag.id}
                 variant="secondary"

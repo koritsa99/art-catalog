@@ -1,16 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
-import { register } from '../../redux/auth/auth.slice';
-import { getError, getLoading } from '../../redux/auth/auth.selectors';
 import styles from './Register.module.css';
+import { register } from '../../redux/auth/auth.operations';
+import { getError, getLoading } from '../../redux/auth/auth.selectors';
+import { AsyncActionDispatch } from '../../redux/store';
 import FormField from '../../components/FormField';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import Alert from '../../components/Alert';
 
 function Register() {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AsyncActionDispatch>();
+
   const loading = useSelector(getLoading);
   const error = useSelector(getError);
 

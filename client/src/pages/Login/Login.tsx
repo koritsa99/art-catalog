@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 
-import { login } from '../../redux/auth/auth.slice';
+import { login } from '../../redux/auth/auth.operations';
 import { getLoading, getError } from '../../redux/auth/auth.selectors';
 import { AsyncActionDispatch } from '../../redux/store';
 import styles from './Login.module.css';

@@ -1,8 +1,9 @@
+import { Image } from '../../types/entities';
 import ImageCard from '../ImageCard';
 import styles from './ImagesList.module.css';
 
 interface IProps {
-  images: any[];
+  images: Image[];
 }
 
 function ImagesList({ images }: IProps) {

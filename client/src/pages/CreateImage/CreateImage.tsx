@@ -58,14 +58,14 @@ function CreateImage() {
               id="createImageAuthor"
               options={
                 authors.data && authors.data.items.length > 0
-                  ? authors.data.items.map((author: any) => author.name)
+                  ? authors.data.items.map((author) => author.name)
                   : []
               }
               value={author}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setAuthor(e.target.value)
               }
-              onSelect={(option: any) => setAuthor(option)}
+              onSelect={(option: string) => setAuthor(option)}
               required
             />
           </FormField>
@@ -87,7 +87,7 @@ function CreateImage() {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setTags(e.target.value)
               }
-              onSelect={(option: any) => setTags(option)}
+              onSelect={(option: string) => setTags(option)}
             />
           </FormField>
           <FormField label="Original URL" htmlFor="createImageOriginalUrl">
