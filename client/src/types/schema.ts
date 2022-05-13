@@ -7,9 +7,42 @@ export interface paths {
   "/auth/login": {
     post: operations["login"];
   };
-  "/users": {
-    /** Optional extended description in CommonMark or HTML. */
-    get: operations["getUsers"];
+  "/auth/register": {
+    post: operations["register"];
+  };
+  "/auth/logout": {
+    post: operations["logout"];
+  };
+  "/auth/resend-verification": {
+    post: operations["resendVerification"];
+  };
+  "/auth/verify/{verificationToken}": {
+    get: operations["verifyUser"];
+  };
+  "/authors": {
+    get: operations["searchAuthors"];
+  };
+  "/authors/{authorId}": {
+    get: operations["getAuthorById"];
+  };
+  "/authors/{authorId}/images": {
+    get: operations["getAuthorWorks"];
+  };
+  "/images": {
+    get: operations["searchImages"];
+    post: operations["createImage"];
+  };
+  "/images/{imageId}": {
+    get: operations["getImageById"];
+  };
+  "/users/{userId}": {
+    get: operations["getUserById"];
+  };
+  "/users/{userId}/likes": {
+    get: operations["getUserLikes"];
+  };
+  "/users/{userId}/uploads": {
+    get: operations["getUserUploads"];
   };
 }
 
@@ -99,13 +132,219 @@ export interface operations {
       };
     };
   };
-  /** Optional extended description in CommonMark or HTML. */
-  getUsers: {
+  register: {
     responses: {
-      /** A JSON array of user names */
+      /** User data */
       200: {
         content: {
-          "application/json": string[];
+          "application/json": components["schemas"]["User"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          email?: string;
+          username?: string;
+          password?: string;
+        };
+      };
+    };
+  };
+  logout: {
+    responses: {
+      /** OK */
+      200: {
+        content: {
+          "application/json": string;
+        };
+      };
+    };
+  };
+  resendVerification: {
+    responses: {
+      /** Updated user */
+      200: {
+        content: {
+          "application/json": components["schemas"]["User"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          email?: string;
+        };
+      };
+    };
+  };
+  verifyUser: {
+    parameters: {
+      path: {
+        /** Verification token */
+        verificationToken: string;
+      };
+    };
+    responses: {
+      /** Updated user */
+      200: {
+        content: {
+          "application/json": components["schemas"]["User"];
+        };
+      };
+    };
+  };
+  searchAuthors: {
+    parameters: {
+      query: {
+        q: string;
+        page: number;
+      };
+    };
+    responses: {
+      /** Authors */
+      200: {
+        content: {
+          "application/json": {
+            items?: components["schemas"]["Author"][];
+            count?: number;
+            page?: number;
+            perPage?: number;
+            pagesCount?: number;
+          };
+        };
+      };
+    };
+  };
+  getAuthorById: {
+    parameters: {
+      path: {
+        authorId: string;
+      };
+    };
+    responses: {
+      /** Author */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Author"];
+        };
+      };
+    };
+  };
+  getAuthorWorks: {
+    parameters: {
+      path: {
+        authorId: string;
+      };
+    };
+    responses: {
+      /** Author works */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Image"][];
+        };
+      };
+    };
+  };
+  searchImages: {
+    parameters: {
+      query: {
+        q: string;
+        page: number;
+      };
+    };
+    responses: {
+      /** Images */
+      200: {
+        content: {
+          "application/json": {
+            items?: components["schemas"]["Image"][];
+            count?: number;
+            page?: number;
+            perPage?: number;
+            pagesCount?: number;
+          };
+        };
+      };
+    };
+  };
+  createImage: {
+    responses: {
+      /** New image */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Image"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "multipart/form-data": {
+          /** Format: binary */
+          image?: string;
+          author?: string;
+          tags?: string[];
+          originalUrl?: string;
+        };
+      };
+    };
+  };
+  getImageById: {
+    parameters: {
+      path: {
+        imageId: number;
+      };
+    };
+    responses: {
+      /** Image */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Image"];
+        };
+      };
+    };
+  };
+  getUserById: {
+    parameters: {
+      path: {
+        userId: number;
+      };
+    };
+    responses: {
+      /** User */
+      200: {
+        content: {
+          "application/json": components["schemas"]["User"];
+        };
+      };
+    };
+  };
+  getUserLikes: {
+    parameters: {
+      path: {
+        userId: number;
+      };
+    };
+    responses: {
+      /** User likes */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Image"][];
+        };
+      };
+    };
+  };
+  getUserUploads: {
+    parameters: {
+      path: {
+        userId: number;
+      };
+    };
+    responses: {
+      /** User uploads */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Image"][];
         };
       };
     };
