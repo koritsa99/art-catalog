@@ -41,6 +41,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/User"
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - imagesUrls
+        - tags
+        - uploadedBy
+        - uploaderId
+        - author
+        - authorId
+        - likedBy
     Tag:
       type: object
       properties:
@@ -58,6 +69,12 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Image"
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - title
+        - images
     User:
       type: object
       properties:
@@ -91,6 +108,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Image"
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - email
+        - username
+        - password
+        - images
+        - likes
     Author:
       type: object
       properties:
@@ -114,6 +140,13 @@ components:
             $ref: "#/components/schemas/Image"
         user:
           $ref: "#/components/schemas/User"
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - name
+        - urls
+        - images
     WebsiteUrl:
       type: object
       properties:
@@ -133,6 +166,14 @@ components:
           $ref: "#/components/schemas/Author"
         authorId:
           type: integer
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - title
+        - url
+        - author
+        - authorId
   securitySchemes:
     JWT:
       scheme: bearer
@@ -153,6 +194,9 @@ paths:
                   type: string
                 password:
                   type: string
+              required:
+                - username
+                - password
       responses:
         '200':
           description: User data
@@ -176,6 +220,10 @@ paths:
                   type: string
                 password:
                   type: string
+              required:
+                - email
+                - username
+                - password
       responses:
         '200':
           description: User data
@@ -209,6 +257,8 @@ paths:
               properties:
                 email:
                   type: string
+              required:
+                - email
       responses:
         '200':
           description: Updated user
@@ -270,6 +320,12 @@ paths:
                     type: number
                   pagesCount:
                     type: number
+                required:
+                  - items
+                  - count
+                  - page
+                  - perPage
+                  - pagesCount
   /authors/{authorId}:
     get:
       summary: Get author by id
@@ -278,7 +334,7 @@ paths:
         - in: path
           name: authorId
           schema:
-            type: string
+            type: number
           required: true
       responses:
         '200':
@@ -295,7 +351,7 @@ paths:
         - in: path
           name: authorId
           schema:
-            type: string
+            type: number
           required: true
       responses:
         '200':
@@ -303,9 +359,26 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Image"
+                type: object
+                properties:  
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Image"
+                  count:
+                    type: integer
+                  page:
+                    type: integer
+                  perPage:
+                    type: integer
+                  pagesCount:
+                    type: integer
+                required:
+                  - items
+                  - count
+                  - page
+                  - perPage
+                  - pagesCount
   
   /images:
     post:
@@ -330,6 +403,10 @@ paths:
                     type: string
                 originalUrl:
                   type: string
+              required:
+                - image
+                - author
+                - tags
       responses:
         '200':
           description: New image
@@ -371,6 +448,12 @@ paths:
                     type: number
                   pagesCount:
                     type: number
+                required:
+                  - items
+                  - count
+                  - page
+                  - perPage
+                  - pagesCount
   /images/{imageId}:
     get:
       summary: Get image by id
