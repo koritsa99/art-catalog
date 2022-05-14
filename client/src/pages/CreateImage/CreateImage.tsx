@@ -65,7 +65,7 @@ function CreateImage() {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setAuthor(e.target.value)
               }
-              onSelect={(option: string) => setAuthor(option)}
+              onSelectOption={(option: string) => setAuthor(option)}
               required
             />
           </FormField>
@@ -87,7 +87,7 @@ function CreateImage() {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setTags(e.target.value)
               }
-              onSelect={(option: string) => setTags(option)}
+              onSelectOption={(option: string) => setTags(option)}
             />
           </FormField>
           <FormField label="Original URL" htmlFor="createImageOriginalUrl">
