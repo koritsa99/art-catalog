@@ -85,16 +85,23 @@ exports.search = async (req, res, next) => {
         },
       ],
     };
+
     const images = await prisma.image.findMany({
       include: {
         tags: true,
         author: true,
+        // likedBy: true,
       },
       where: filter,
       take: perPage,
       skip: (page - 1) * perPage,
       orderBy: {
-        [orderBy]: orderMethod,
+        [orderBy]:
+          orderBy === 'likedBy'
+            ? {
+                _count: orderMethod,
+              }
+            : orderMethod,
       },
     });
     const count = await prisma.image.count({
