@@ -22,6 +22,7 @@ model Image {
   author      Author   @relation(fields: [authorId], references: [id])
   authorId    Int
   likedBy     User[]   @relation(name: "likes")
+  views       Int      @default(0)
 }
 
 model Tag {
