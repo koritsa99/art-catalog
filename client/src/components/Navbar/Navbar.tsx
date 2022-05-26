@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useRef, useState } from 'react';
+import { FiMenu } from 'react-icons/fi';
 
 import styles from './Navbar.module.css';
 import { urls } from '../../config/routes';
@@ -9,11 +10,15 @@ import { useClickOutside } from '../../hooks/useClickOutside';
 import Container from '../Container';
 import Button from '../Button';
 import Searchbar from '../Searchbar';
+import IconButton from '../IconButton';
+import Drawer from '../../lib/Drawer';
+import Sidebar from '../Sidebar';
 
 function Navbar() {
   const user = useSelector(getUser);
   const [userPopupOpen, setUserPopupOpen] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const closePopup = () => setUserPopupOpen(false);
   const togglePopup = () => setUserPopupOpen((prev) => !prev);
@@ -22,8 +27,13 @@ function Navbar() {
 
   return (
     <header className={styles.header}>
+      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <Sidebar />
+      </Drawer>
+
       <Container>
         <div className={styles.content}>
+          <IconButton icon={FiMenu} onClick={() => setDrawerOpen(true)} />
           <Link to={urls.home} className={styles.logo}>
             <img src="/logo.png" alt="Logo" width={50} />
           </Link>
