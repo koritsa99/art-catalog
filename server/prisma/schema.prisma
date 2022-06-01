@@ -11,18 +11,31 @@ datasource db {
 }
 
 model Image {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  imagesUrls  String[]
-  originalUrl String?
-  tags        Tag[]
-  uploadedBy  User     @relation(fields: [uploaderId], references: [id])
-  uploaderId  Int
-  author      Author   @relation(fields: [authorId], references: [id])
-  authorId    Int
-  likedBy     User[]   @relation(name: "likes")
-  views       Int      @default(0)
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  originalWidth  Int
+  originalHeight Int
+  thumbnailUrl   String
+  previewUrl     String
+  originalUrl    String
+  post           Post?    @relation(fields: [postId], references: [id])
+  postId         Int?
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  images     Image[]
+  sourceUrl  String?
+  tags       Tag[]
+  uploadedBy User     @relation(fields: [uploaderId], references: [id])
+  uploaderId Int
+  author     Author   @relation(fields: [authorId], references: [id])
+  authorId   Int
+  likedBy    User[]   @relation(name: "likes")
+  views      Int      @default(0)
 }
 
 model Tag {
@@ -30,7 +43,7 @@ model Tag {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String   @unique
-  images    Image[]
+  posts     Post[]
 }
 
 model User {
@@ -42,10 +55,10 @@ model User {
   password          String
   verificationToken String?  @unique
   authToken         String?  @unique
-  images            Image[]
+  posts             Post[]
   author            Author?  @relation(fields: [authorId], references: [id])
   authorId          Int?     @unique
-  likes             Image[]  @relation("likes")
+  likes             Post[]   @relation("likes")
 }
 
 model Author {
@@ -54,7 +67,7 @@ model Author {
   updatedAt DateTime     @updatedAt
   name      String       @unique
   urls      WebsiteUrl[]
-  images    Image[]
+  posts     Post[]
   user      User?
 }
 

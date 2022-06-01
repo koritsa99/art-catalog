@@ -10,7 +10,7 @@ exports.create = async (req, res, next) => {
     const { author, tags, originalUrl } = req.body;
     const tagsArray = tags.split(', ');
 
-    const newImage = await prisma.image.create({
+    const newPost = await prisma.post.create({
       data: {
         uploadedBy: {
           connect: {
@@ -28,7 +28,7 @@ exports.create = async (req, res, next) => {
           },
         },
         originalUrl: originalUrl || null,
-        imagesUrls: req.files.map((file) => file.filename),
+        images: req.files.map((file) => file.filename),
         tags: {
           connectOrCreate: tagsArray.map((tag) => ({
             where: {
@@ -46,7 +46,7 @@ exports.create = async (req, res, next) => {
       },
     });
 
-    res.json(newImage);
+    res.json(newPost);
   } catch (error) {
     next(error);
   }
@@ -129,9 +129,9 @@ exports.search = async (req, res, next) => {
  */
 exports.getById = async (req, res, next) => {
   try {
-    const imageId = Number(req.params.imageId);
-    const image = await prisma.image.findUnique({
-      where: { id: imageId },
+    const postId = Number(req.params.postId);
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
       include: {
         author: true,
         tags: true,
@@ -139,14 +139,14 @@ exports.getById = async (req, res, next) => {
       },
     });
 
-    if (!image) {
+    if (!post) {
       res.status(404).json({
-        message: `Image with id ${req.params.imageId} not found`,
+        message: `Post with id ${postId} not found`,
       });
       return;
     }
 
-    res.json(image);
+    res.json(post);
   } catch (error) {
     next(error);
   }
